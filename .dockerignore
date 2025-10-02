@@ -1,0 +1,61 @@
+# Ignore version control files
+.git
+.gitignore
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Ignore SQLite database files (they will be created by the app)
+*.db
+*.sqlite
+*.sqlite3
+
+# Ignore log files
+*.log
+
+# Ignore local environment files
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Ignore IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Ignore backup directories
+v8_*
+*_backup/
+
+# Ignore Docker files
+docker-compose*
+
+# Ignore test files
+tests/
+test_*
+
+# Ignore documentation
+docs/
+*.md

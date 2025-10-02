@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: erp-system
+  labels:
+    app: erp-system
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: erp-system
+  template:
+    metadata:
+      labels:
+        app: erp-system
+    spec:
+      containers:
+      - name: erp-system
+        image: <your-container-registry>/erp-system:oracle
+        ports:
+        - containerPort: 8080
+        env:
+        - name: FLASK_APP
+          value: "app.py"
+        - name: FLASK_ENV
+          value: "production"
+        - name: FLASK_CONFIG
+          value: "production"
+        - name: PORT
+          value: "8080"
+        - name: DATABASE_URL
+          value: "sqlite:///memory"
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: erp-secrets
+              key: secret-key
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: erp-system-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: erp-system
